@@ -48,8 +48,8 @@ def checkHomopolymers(max, sequence):
     else:
         return True
 
-def checkRestrictionSites(list,sequence):
-    restrictionSiteFlag = True
+def checkForbiddenSites(list,sequence):
+    forbiddenSiteFlag = True
 
     for i in range(0,len(list)):
         forbiddenSites = re.compile(list[i])
@@ -58,9 +58,9 @@ def checkRestrictionSites(list,sequence):
         if forbiddenSiteFoundList == []:
             pass
         else:
-            restrictionSiteFlag = False
+            forbiddenSiteFlag = False
 
-    return restrictionSiteFlag
+    return forbiddenSiteFlag
 
 def generateRandomSequence(NumNucleotides):
     generatedSequence = '' # empty sequence
@@ -83,7 +83,7 @@ M = 20 # Amount of sequences to generate
 GCmin = 40 # minimum percentage GC content
 GCmax = 60 # maximum percentage GC content
 maxHomoPolymerLength = 6 # maximum amount a nucleotide may be repeated in a row
-forbiddenRestrictionSites = ['GAAGAC','GTCTTC','GGTCTC','GAGACC','CACCTCGC','GCGAGGTG']
+forbiddenSites = ['GAAGAC','GTCTTC','GGTCTC','GAGACC','CACCTCGC','GCGAGGTG']
 ####################################### USER PARAMATERS HERE
 
 #sanity checks
@@ -124,15 +124,15 @@ while succesfullyFound < M:
 
     approvedForGCcontent = False
     approvedForHomopolymers = False
-    approvedForRestrictionSites = False
+    approvedForForbiddenSites = False
 
     candidateSequence = generateRandomSequence(N)
 
     approvedForGCcontent = checkGCcontent(GCmin, GCmax, candidateSequence)
     approvedForHomopolymers = checkHomopolymers(maxHomoPolymerLength, candidateSequence)
-    approvedForRestrictionSites = checkRestrictionSites(forbiddenRestrictionSites, candidateSequence)
+    approvedForForbiddenSites = checkForbiddenSites(forbiddenSites, candidateSequence)
 
-    if approvedForGCcontent == True and approvedForHomopolymers == True and approvedForRestrictionSites == True:
+    if approvedForGCcontent == True and approvedForHomopolymers == True and approvedForForbiddenSites == True:
         print(str(candidateSequence)) #optional but useful
         worksheet1.write(succesfullyFound+1,0,candidateSequence)
         succesfullyFound += 1
