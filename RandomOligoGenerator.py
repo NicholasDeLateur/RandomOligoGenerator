@@ -3,7 +3,6 @@
 # Run using PyCharm Community Edition 2016.1.3 with Anaconda3 on Windows 10
 # Generates and writes M N-length DNA sequences satisfying user parameters to an excel file.
 # Does so by generating a random sequence and then checking if it meets paramaters
-# Writes to the excel file every time it finds a successful one, not just at the end.
 
 import xlsxwriter
 import datetime
