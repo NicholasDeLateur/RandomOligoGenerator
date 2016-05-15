@@ -118,15 +118,9 @@ random.seed(0) # known random seed
 succesfullyFound = 0 # successfully found sequences
 attempts=0 # sanity counter
 
-# Create an new Excel file and add a worksheet.
-# WARNING doesn't check if the filename already exists.
-# Shouldn't be a problem if you don't run the program within seconds of itself
-filename = 'RandomNucleotides'+datetime.datetime.now().strftime("%y%m%d%H%M%S")+'.xlsx'
-workbook1 = xlsxwriter.Workbook(filename)
-worksheet1 = workbook1.add_worksheet()
-worksheet1.write(0,0,'Sequence')
-
 # Generate and write acceptable sequences
+GeneratedSequences = []
+
 while succesfullyFound < M:
     attempts+=1 # sanity counter
 
@@ -142,12 +136,23 @@ while succesfullyFound < M:
 
     if approvedForGCcontent == True and approvedForHomopolymers == True and approvedForForbiddenSites == True:
         print(str(candidateSequence)) #optional but useful
-        worksheet1.write(succesfullyFound+1,0,candidateSequence)
+        GeneratedSequences.append(candidateSequence)
         succesfullyFound += 1
 
     if attempts > 100000: # sanity check failed
         print("something went TERRIBLY wrong I'm so sorry!")
         succesfullyFound=M
+
+# Create an new Excel file and add a worksheet.
+# WARNING doesn't check if the filename already exists.
+# Shouldn't be a problem if you don't run the program within seconds of itself
+filename = 'RandomNucleotides' + datetime.datetime.now().strftime("%y%m%d%H%M%S") + '.xlsx'
+workbook1 = xlsxwriter.Workbook(filename)
+worksheet1 = workbook1.add_worksheet()
+
+worksheet1.write(0, 0, 'Sequence')
+for i in range(0,M):
+    worksheet1.write(i+1, 0, GeneratedSequences[i])
 
 # MANDATORY close the workbook
 workbook1.close()
