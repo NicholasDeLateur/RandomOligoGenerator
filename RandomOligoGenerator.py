@@ -10,6 +10,11 @@ import datetime
 import random
 import re
 
+def RC_DNA(sequence):
+    # Taken from https://gist.github.com/crazyhottommy/7255638#file-reverse_complement-py
+    seq_dict = {'A':'T','T':'A','G':'C','C':'G'}
+    return "".join([seq_dict[base] for base in reversed(sequence)])
+
 def checkGCcontent(min, max, sequence):
     ATcount=0
     GCcount=0
@@ -83,8 +88,11 @@ M = 20 # Amount of sequences to generate
 GCmin = 40 # minimum percentage GC content
 GCmax = 60 # maximum percentage GC content
 maxHomoPolymerLength = 6 # maximum amount a nucleotide may be repeated in a row
-forbiddenSites = ['GAAGAC','GTCTTC','GGTCTC','GAGACC','CACCTCGC','GCGAGGTG']
+forbiddenSites = ['GAAGAC', 'GGTCTC','CACCTCGC']
 ####################################### USER PARAMATERS HERE
+
+for i in range(0, len(forbiddenSites)):
+    forbiddenSites.append(RC_DNA(forbiddenSites[i]))
 
 #sanity checks
 if N >= 10000 or N <= 1:
