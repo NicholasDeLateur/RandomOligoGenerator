@@ -82,8 +82,8 @@ def generateRandomSequence(NumNucleotides):
     return generatedSequence
 
 ####################################### USER PARAMATERS HERE
-N = 20 # Length in nucleotides
-M = 20 # Amount of sequences to generate
+N = 61 # Length in nucleotides
+M = 1 # Amount of sequences to generate
 GCmin = 40 # minimum percentage GC content
 GCmax = 60 # maximum percentage GC content
 maxHomoPolymerLength = 6 # maximum amount a nucleotide may be repeated in a row
